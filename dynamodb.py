@@ -95,7 +95,6 @@ aws dynamodb delete-table \
 import boto3
 from boto3.dynamodb.conditions import Key
 
-
 def create_table(dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource("dynamodb")
@@ -108,7 +107,7 @@ def create_table(dynamodb=None):
         AttributeDefinitions=[{"AttributeName": "customer_id", "AttributeType": "N"}],
         ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5},
     )
-
+    
     return table
 
 
