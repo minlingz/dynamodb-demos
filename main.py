@@ -43,7 +43,7 @@ class QueryCLI:
         """delete data"""
         delete_item()
 
-    def delete_table():
+    def delete_table(self):
         """delete table"""
         delete_table()
 

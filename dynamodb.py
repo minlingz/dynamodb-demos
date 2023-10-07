@@ -192,5 +192,5 @@ def delete_table(dynamodb=None):
 
     table = dynamodb.Table("customers")
     table.delete()
-
+    
     return table
