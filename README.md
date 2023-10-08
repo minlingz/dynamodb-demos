@@ -123,7 +123,7 @@ Complex SQL Query for a NoSQL Database - DynamoDB
 
     return response
     ```
-* `python main.py query_region_user` - Query data from the DynamoDB table.
+* `python main.py query_region_user` - Query data from the DynamoDB table, return total user number, total country and average user number for each region, sorted by total user number.
 
     ```python
     def query_region_user(dynamodb=None):
@@ -184,14 +184,17 @@ Complex SQL Query for a NoSQL Database - DynamoDB
 
 ## Example
 
-### Get country with ranking 1 (default ranking is 1)
+* Sample data from the CSV file
+![Alt text](sample_csv.png)
+
+* Get country with ranking 1 (default ranking is 1)
 
 ![Alt text](get_rank_1.png)
 
-### Get country with ranking 4
+* Get country with ranking 4
 
 ![Alt text](get_rank_4.png)
 
-### Query data from the DynamoDB table, return total and average values for each region with sorted order
+* Query data from the DynamoDB table, return total and average values for each region with sorted order of total users
 
 ![Alt text](query.png)
