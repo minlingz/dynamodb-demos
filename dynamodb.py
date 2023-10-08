@@ -10,8 +10,8 @@ def create_table(dynamodb=None):
         dynamodb = boto3.resource("dynamodb")
 
     table = dynamodb.create_table(
-        TableName="ciu",
-        KeySchema=[{"AttributeName": "ranking", "KeyType": "HASH"}],
+        TableName="ciu",  # Table name
+        KeySchema=[{"AttributeName": "ranking", "KeyType": "HASH"}],  # partition key
         AttributeDefinitions=[{"AttributeName": "ranking", "AttributeType": "S"}],
         ProvisionedThroughput={"ReadCapacityUnits": 5, "WriteCapacityUnits": 5},
     )
@@ -31,7 +31,9 @@ def put_item(dynamodb=None):
         dynamodb = boto3.resource("dynamodb")
 
     table = dynamodb.Table("ciu")
-    response = table.put_item(Item={"ranking": "0", "name": "dummy"})
+    response = table.put_item(
+        Item={"ranking": "0", "name": "dummy"}
+    )  # put item in table
 
     return response
 
@@ -41,7 +43,9 @@ def get_item(dynamodb=None, rank=1):
         dynamodb = boto3.resource("dynamodb")
 
     table = dynamodb.Table("ciu")
-    response = table.get_item(Key={"ranking": str(rank)})
+    response = table.get_item(
+        Key={"ranking": str(rank)}
+    )  # get item from table with key
     print(json.dumps(response["Item"], indent=4))
     return response
 
@@ -56,7 +60,9 @@ def update_item(dynamodb=None):
         Key={"ranking": "0"},
         UpdateExpression="SET #name = :new_name",
         ExpressionAttributeNames={"#name": "name"},
-        ExpressionAttributeValues={":new_name": "United Nations"},
+        ExpressionAttributeValues={
+            ":new_name": "United Nations"
+        },  # update item in table with new name
         ReturnValues="UPDATED_NEW",
     )
 
@@ -132,7 +138,9 @@ def delete_item(dynamodb=None):
         dynamodb = boto3.resource("dynamodb")
 
     table = dynamodb.Table("ciu")
-    response = table.delete_item(Key={"ranking": "0"})
+    response = table.delete_item(
+        Key={"ranking": "0"}
+    )  # Delete item from table with key
 
     return response
 
@@ -142,7 +150,7 @@ def delete_table(dynamodb=None):
         dynamodb = boto3.resource("dynamodb")
 
     table = dynamodb.Table("ciu")
-    table.delete()
+    table.delete()  # Delete the table
 
     return table
 
@@ -151,10 +159,10 @@ def load_csv(dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource("dynamodb")
 
-    table = dynamodb.Table("ciu")
+    table = dynamodb.Table("ciu")  # Table to load data into
 
     with codecs.open("country_internet_user.csv", "r", encoding="utf-8-sig") as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=";")
+        reader = csv.DictReader(csvfile, delimiter=";")  # read csv file
         for row in reader:
             item = {
                 "name": row["name"],
@@ -164,6 +172,6 @@ def load_csv(dynamodb=None):
                 "ranking": row["ranking"],
                 "region": row["region"],
             }
-            table.put_item(Item=item)
+            table.put_item(Item=item)  # put item in table
 
     return table
